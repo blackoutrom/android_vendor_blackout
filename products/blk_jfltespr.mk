@@ -8,9 +8,9 @@ OVERLAY_TARGET := pa_xxhdpi
 PRODUCT_PACKAGE_OVERLAYS += vendor/blackout/overlay/aokp/device/jfltexxx
 
 # Blackout ROM boot logo
-PRODUCT_COPY_FILES += \
-    vendor/blackout/prebuilt/common/bootlogo/blk_logo_1080x1920.rle:root/logo.rle
-    $(shell cp -f vendor/blackout/prebuilt/common/bootanimation_framework/android-logo-mask_samsung-xhdpi.png frameworks/base/core/res/assets/images/android-logo-mask.png)
+#PRODUCT_COPY_FILES += \
+#    vendor/blackout/prebuilt/common/bootlogo/blk_logo_1080x1920.rle:root/logo.rle
+#    $(shell cp -f vendor/blackout/prebuilt/common/bootanimation_framework/android-logo-mask_samsung-xhdpi.png frameworks/base/core/res/assets/images/android-logo-mask.png)
 
 # Copy bootanimation
 #PRODUCT_COPY_FILES += \
