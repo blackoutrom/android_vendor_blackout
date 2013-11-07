@@ -1,0 +1,17 @@
+Blackout ROM
+==================================
+Source : http://github.com/tjarnold
+Website: http://
+Forum  : http://
+----------------------------------
+CHANGELOG : (Notable New Features)
+----------------------------------
+
+## 0.1.Alpha
+
+- Started with CM 10.2 Base
+- Added TRDS 2.0
+- Added Halo 2.0
+- Added ParanoidPreferences per app DPI settings
+
+

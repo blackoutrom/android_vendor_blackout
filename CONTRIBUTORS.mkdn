@@ -1,0 +1,35 @@
+Blackout ROM
+===========
+
+
+Developers:
+----------------
+* __tjarnold__
+
+Forum Administrators:
+-----------------------------
+
+BuildBot Maintainers:
+----------------------------
+
+Web Administrators:
+---------------------------
+
+Gerrit Administrators:
+------------------------------
+
+Graphics Team:
+---------------------
+
+
+Devices:		  Codename:       Maintainer:
+---------------------------------------------------------------------
+
+Samsung:
+---------------------------------------------------------------------
+* __Galaxy S IV (AT&T) (jflteatt) :__ tjarnold
+* __Galaxy S IV (Sprint) (jfltespr) :__ tjarnold
+* __Nexus 10 (manta) :__ tjarnold
+
+Best regards
+     tjarnold
