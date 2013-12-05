@@ -33,21 +33,22 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := vendor/blackout/overlay/build/tools
 # T-Mobile theme engine
 include vendor/blackout/config/themes_common.mk
 
-# init.d support
-PRODUCT_COPY_FILES += \
-    vendor/blackout/prebuilt/common/etc/init.d/00check:system/etc/init.d/00check \
-    vendor/blackout/prebuilt/common/etc/init.d/01zipalign:system/etc/init.d/01zipalign \
-    vendor/blackout/prebuilt/common/etc/init.d/02sysctl:system/etc/init.d/02sysctl \
-    vendor/blackout/prebuilt/common/etc/init.d/03firstboot:system/etc/init.d/03firstboot \
-    vendor/blackout/prebuilt/common/etc/init.d/05freemem:system/etc/init.d/05freemem \
-    vendor/blackout/prebuilt/common/etc/init.d/06removecache:system/etc/init.d/06removecache \
-    vendor/blackout/prebuilt/common/etc/init.d/07fixperms:system/etc/init.d/07fixperms \
-    vendor/blackout/prebuilt/common/etc/init.d/09cron:system/etc/init.d/09cron \
-    vendor/blackout/prebuilt/common/etc/init.d/10sdboost:system/etc/init.d/10sdboost \
-    vendor/blackout/prebuilt/common/etc/init.d/98tweaks:system/etc/init.d/98tweaks \
-    vendor/blackout/prebuilt/common/etc/helpers.sh:system/etc/helpers.sh \
-    vendor/blackout/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
-    vendor/blackout/prebuilt/common/etc/init.d.cfg:system/etc/init.d.cfg
+ # init.d support
+  PRODUCT_COPY_FILES += \
+      vendor/blackout/prebuilt/common/bin/sysinit:system/bin/sysinit \
+      vendor/blackout/prebuilt/common/etc/init.d/00check:system/etc/init.d/00check \
+      vendor/blackout/prebuilt/common/etc/init.d/01zipalign:system/etc/init.d/01zipalign \
+      vendor/blackout/prebuilt/common/etc/init.d/02sysctl:system/etc/init.d/02sysctl \
+      vendor/blackout/prebuilt/common/etc/init.d/03firstboot:system/etc/init.d/03firstboot \
+      vendor/blackout/prebuilt/common/etc/init.d/05freemem:system/etc/init.d/05freemem \
+      vendor/blackout/prebuilt/common/etc/init.d/06removecache:system/etc/init.d/06removecache \
+      vendor/blackout/prebuilt/common/etc/init.d/07fixperms:system/etc/init.d/07fixperms \
+      vendor/blackout/prebuilt/common/etc/init.d/09cron:system/etc/init.d/09cron \
+      vendor/blackout/prebuilt/common/etc/init.d/10sdboost:system/etc/init.d/10sdboost \
+      vendor/blackout/prebuilt/common/etc/init.d/98tweaks:system/etc/init.d/98tweaks \
+      vendor/blackout/prebuilt/common/etc/helpers.sh:system/etc/helpers.sh \
+      vendor/blackout/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
+      vendor/blackout/prebuilt/common/etc/init.d.cfg:system/etc/init.d.cfg
 
 # Added xbin files
 PRODUCT_COPY_FILES += \
