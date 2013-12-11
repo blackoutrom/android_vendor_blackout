@@ -2,7 +2,7 @@
 ifeq (blk_jfltespr,$(TARGET_PRODUCT))
 
 # OVERLAY_TARGET adds overlay asset source
-OVERLAY_TARGET := pa_xxhdpi
+# OVERLAY_TARGET := pa_xxhdpi
 
 # AOKP device overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/blackout/overlay/aokp/device/jfltexxx

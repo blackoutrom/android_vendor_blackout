@@ -14,8 +14,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.config.alarm_alert=Cesium.ogg
 
 # Blackout ROM Packages
-#PRODUCT_PACKAGES += \
-#    GooManager
+PRODUCT_PACKAGES += \
+    GooManager
 
 PRODUCT_COPY_FILES += \
     vendor/blackout/prebuilt/common/apk/novalauncher.apk:system/app/novalauncher.apk \
@@ -66,32 +66,32 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGE_OVERLAYS += vendor/blackout/overlay/aokp/common
 
 # ParanoidAndroid Overlays
-PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/common
-PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/$(TARGET_PRODUCT)
+# PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/common
+# PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/$(TARGET_PRODUCT)
 
 # Allow device family to add overlays and use a same prop.conf
-ifneq ($(OVERLAY_TARGET),)
-    PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/$(OVERLAY_TARGET)
-    PA_CONF_SOURCE := $(OVERLAY_TARGET)
-else
-    PA_CONF_SOURCE := $(TARGET_PRODUCT)
-endif
+# ifneq ($(OVERLAY_TARGET),)
+#     PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/$(OVERLAY_TARGET)
+#     PA_CONF_SOURCE := $(OVERLAY_TARGET)
+# else
+#     PA_CONF_SOURCE := $(TARGET_PRODUCT)
+# endif
 
 # ParanoidAndroid Proprietary
-PRODUCT_COPY_FILES += \
-    vendor/pa/prebuilt/common/apk/ParanoidPreferences.apk:system/app/ParanoidPreferences.apk \
-    vendor/blackout/prebuilt/pa/$(PA_CONF_SOURCE).conf:system/etc/paranoid/properties.conf \
-    vendor/blackout/prebuilt/pa/$(PA_CONF_SOURCE).conf:system/etc/paranoid/backup.conf
+# PRODUCT_COPY_FILES += \
+#     vendor/pa/prebuilt/common/apk/ParanoidPreferences.apk:system/app/ParanoidPreferences.apk \
+#     vendor/blackout/prebuilt/pa/$(PA_CONF_SOURCE).conf:system/etc/paranoid/properties.conf \
+#     vendor/blackout/prebuilt/pa/$(PA_CONF_SOURCE).conf:system/etc/paranoid/backup.conf
 
 # ParanoidAndroid Images
-PA_IMAGE_FILES := $(wildcard vendor/pa/prebuilt/preferences/images/*.png)
-PRODUCT_COPY_FILES += \
-    $(foreach f,$(PA_IMAGE_FILES),$(f):system/etc/paranoid/preferences/images/$(notdir $(f)))
+# PA_IMAGE_FILES := $(wildcard vendor/pa/prebuilt/preferences/images/*.png)
+# PRODUCT_COPY_FILES += \
+#     $(foreach f,$(PA_IMAGE_FILES),$(f):system/etc/paranoid/preferences/images/$(notdir $(f)))
 
 # ParanoidAndroid Preferences
-PA_PREF_FILES := $(wildcard vendor/blackout/prebuilt/pa/preferences/$(PA_CONF_SOURCE)/*.xml)
-PRODUCT_COPY_FILES += \
-    $(foreach f,$(PA_PREF_FILES),$(f):system/etc/paranoid/preferences/$(notdir $(f)))
+# PA_PREF_FILES := $(wildcard vendor/blackout/prebuilt/pa/preferences/$(PA_CONF_SOURCE)/*.xml)
+# PRODUCT_COPY_FILES += \
+#     $(foreach f,$(PA_PREF_FILES),$(f):system/etc/paranoid/preferences/$(notdir $(f)))
 
 BOARD := $(subst blk_,,$(TARGET_PRODUCT))
 
@@ -100,12 +100,12 @@ CM_RELEASE := true
 CM_BUILD := $(BOARD)
 
 # Add PA release version
-PA_VERSION_MAJOR = 3
-PA_VERSION_MINOR = 9
-PA_VERSION_MAINTENANCE = 9-RC2
-PA_PREF_REVISION = 1
-VERSION := $(PA_VERSION_MAJOR).$(PA_VERSION_MINOR)$(PA_VERSION_MAINTENANCE)
-PA_VERSION := pa_$(BOARD)-$(VERSION)-$(shell date +%0d%^b%Y-%H%M%S)
+# PA_VERSION_MAJOR = 3
+# PA_VERSION_MINOR = 9
+# PA_VERSION_MAINTENANCE = 9-RC2
+# PA_PREF_REVISION = 1
+# VERSION := $(PA_VERSION_MAJOR).$(PA_VERSION_MINOR)$(PA_VERSION_MAINTENANCE)
+# PA_VERSION := pa_$(BOARD)-$(VERSION)-$(shell date +%0d%^b%Y-%H%M%S)
 
 # Blackout ROM version
 BLK_VERSION_MAJOR = 0
@@ -117,9 +117,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.blk.version=$(BLK_VERSION) \
     ro.blkrom.version=blk_$(BOARD)_$(BLK_VERSION)_$(shell date +%Y%m%d-%H%M%S) \
     ro.modversion=$(PA_VERSION) \
-    ro.pa.family=$(PA_CONF_SOURCE) \
-    ro.pa.version=$(VERSION) \
-    ro.papref.revision=$(PA_PREF_REVISION) \
+#     ro.pa.family=$(PA_CONF_SOURCE) \
+#     ro.pa.version=$(VERSION) \
+#     ro.papref.revision=$(PA_PREF_REVISION) \
     ro.aokp.version=$(BOARD)_jb-mr2
 
 # ROMStats Properties

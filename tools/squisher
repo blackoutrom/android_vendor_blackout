@@ -40,6 +40,9 @@ fi
 OPTICHARGER=$ANDROID_BUILD_TOP/vendor/blackout/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
+DELETE_MEDIA="*.qmg"
+DELETE_APKS="LiveWallpapers.apk SpeechRecorder.apk VideoEditor.apk HoloSpiralWallpaper.apk MagicSmokeWallpapers.apk NoiseField.apk Galaxy4.apk OpenWnn.apk PinyinIME.apk"
+DELETE_FONTS="MTLmr3m.ttf"
 
 REPACK=$OUT/repack.d
 echo -e ${bldcya}"Sanitizing environment..."${txtrst}
@@ -82,6 +85,15 @@ fi
 
 # Delete unnecessary binaries
 ( cd $REPACK/ota/system/bin; echo $DELETE_BINS | xargs rm -f; )
+
+# Delete Offline charging mode files
+( cd $REPACK/ota/system/media; echo $DELETE_MEDIA | xargs rm -f; )
+
+# Delete Home Apk's
+( cd $REPACK/ota/system/app; echo $DELETE_APKS | xargs rm -f; )
+
+# Delete Unnecessary Fonts
+( cd $REPACK/ota/system/fonts; echo $DELETE_FONTS | xargs rm -f; )
 
 # No need for recovery
 rm -rf $REPACK/ota/recovery
