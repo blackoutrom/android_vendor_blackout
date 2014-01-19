@@ -104,6 +104,12 @@ rm -rf $REPACK/ota/recovery
 [ -d $REPACK/ota/system/lib/modules ] && \
 	find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
 
+# Use customer LCD density of 440 for xxhdpi
+DEVICELCD=`sed -n -e'/ro\.sf\.lcd_density/s/^.*=//p' $OUT/system/build.prop`
+if [ "$DEVICELCD" = "480" ]; then
+    sed -i 's/ro.sf.lcd_density=480/ro.sf.lcd_density=440/g' $OUT/system/build.prop
+fi
+
 # Determine what to name the new signed package
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
 	BLKVERSION=`grep 'ro.blkrom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.blkrom.version=//g'`

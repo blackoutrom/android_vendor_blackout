@@ -1,17 +1,32 @@
 Blackout ROM
 ==================================
 Source : http://github.com/tjarnold
-Website: http://
-Forum  : http://
 ----------------------------------
 CHANGELOG : (Notable New Features)
 ----------------------------------
 
 ## 0.1.Alpha
 
-- Started with CM 10.2 Base
-- Added TRDS 2.0
-- Added Halo 2.0
-- Added ParanoidPreferences per app DPI settings
-
-
+- CM 11.0 Base (This ROM includes all current features of CM11)
+- TRDS 3.0
+- Halo 2.0
+- Advanced Reboot turned on by default
+- Configurable init.d tweaks
+- LCD Density Changer
+- Active Display
+- Breathing Voicemail, SMS and Missed Calls
+- Statusbar
+    - Show/Hide Clock and Date
+    - Clock and Date colorchanger
+    - Clock and Date alignment (Center/Right)
+    - Show/Hide AM/PM
+    - Show/Hide Date (small or large font)
+    - Date in lowercase or uppercase
+    - Custom date format
+- Notification Drawer
+    - Custom drawer background
+    - Drawer background transparency
+    - Notification Drawer Shortcuts
+    - Hide/Show Carrier and Wifi Label
+- IME Input Options
+ 
