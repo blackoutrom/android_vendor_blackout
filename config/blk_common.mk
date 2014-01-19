@@ -14,9 +14,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.config.alarm_alert=Cesium.ogg
 
 # Blackout ROM Packages
-PRODUCT_PACKAGES += \
-    GooManager
-
 PRODUCT_COPY_FILES += \
     vendor/blackout/prebuilt/common/apk/novalauncher.apk:system/app/novalauncher.apk \
     vendor/blackout/prebuilt/common/apk/titanium.apk:system/app/titanium.apk
