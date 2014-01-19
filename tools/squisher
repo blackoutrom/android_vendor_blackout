@@ -41,13 +41,15 @@ OPTICHARGER=$ANDROID_BUILD_TOP/vendor/blackout/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
 DELETE_MEDIA="*.qmg"
-DELETE_APKS="LiveWallpapers.apk SpeechRecorder.apk VideoEditor.apk HoloSpiralWallpaper.apk MagicSmokeWallpapers.apk NoiseField.apk Galaxy4.apk OpenWnn.apk PinyinIME.apk CMAccount.apk"
+DELETE_APKS="LiveWallpapers.apk SpeechRecorder.apk VideoEditor.apk HoloSpiralWallpaper.apk MagicSmokeWallpapers.apk NoiseField.apk Galaxy4.apk OpenWnn.apk PinyinIME.apk CMAccount.apk CMUpdater.apk CMWallpapers.apk"
+#DELETE_PRIV_APKS="Launcher3.apk"
 DELETE_FONTS="MTLmr3m.ttf"
 
 REPACK=$OUT/repack.d
 echo -e ${bldcya}"Sanitizing environment..."${txtrst}
 rm -rf $REPACK
 mkdir -p $REPACK
+echo
 
 
 # Unpack the otapackage and opticharge all apks
@@ -56,34 +58,40 @@ mkdir $REPACK/ota
 cd $REPACK/ota
 echo -e ${bldgrn}"Unpacking${txtrst}: ${grn}$OTAPACKAGE..."${txtrst}
 unzip $QUIET $OTAPACKAGE
-echo -e ""
-cd $REPACK/ota/system/framework
-$OPTICHARGER framework-res.apk
-cd $REPACK/ota/system/app
+echo
+
+# Move all apks to the same directory so xargs can
+# use also with framework-res.apk. This allow process
+# framework-res.apk in parallel with other apks
+mkdir -p $REPACK/parallel
+cd $REPACK/parallel
+cp $REPACK/ota/system/framework/framework-res.apk .
+cp $REPACK/ota/system/app/*.apk .
+for f in $REPACK/ota/system/priv-app/*.apk; do
+    cp $f ./priv-app-$(basename $f)
+done
+
+# Do optimization in parallel
 find ./ -name \*.apk | $XARGS $OPTICHARGER
-cd $REPACK/ota/system/priv-app
-find ./ -name \*.apk | $XARGS $OPTICHARGER
+
+# Move optimized apks to repack directory
+mv -f $REPACK/parallel/framework-res.apk $REPACK/ota/system/framework/framework-res.apk
+for f in $REPACK/parallel/priv-app*.apk; do
+    mv $f $REPACK/ota/system/priv-app/$(basename $f | cut -d'-' -f3)
+done
+mv -f $REPACK/parallel/*.apk $REPACK/ota/system/app/
+
+# Return to directory
+cd $REPACK/ota
+rm -rf $REPACK/parallel
 )
+
 
 # Fix build.prop
 $SED -i \
-	-e '/ro\.kernel\.android\.checkjni/d' \
-	-e '/ro\.build\.type/s/eng/user/' \
-	$REPACK/ota/system/build.prop
-
-# Delete Blackout ROM specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/blackout/tools/squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/blackout/tools/squisher.rm`; do
-		rm -f $REPACK/ota/$RM_FILE
-	done
-fi
-
-# Delete target product specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/blackout/tools/$TARGET_PRODUCT-squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/blackout/tools/$TARGET_PRODUCT-squisher.rm`; do
-		rm -f $REPACK/ota/$RM_FILE
-	done
-fi
+        -e '/ro\.kernel\.android\.checkjni/d' \
+        -e '/ro\.build\.type/s/eng/user/' \
+        $REPACK/ota/system/build.prop
 
 # Delete unnecessary binaries
 ( cd $REPACK/ota/system/bin; echo $DELETE_BINS | xargs rm -f; )
@@ -94,21 +102,32 @@ fi
 # Delete Home Apk's
 ( cd $REPACK/ota/system/app; echo $DELETE_APKS | xargs rm -f; )
 
+# Delete priv-app Apk's
+#( cd $REPACK/ota/system/priv-app; echo $DELETE_PRIV_APKS | xargs rm -f; )
+
 # Delete Unnecessary Fonts
 ( cd $REPACK/ota/system/fonts; echo $DELETE_FONTS | xargs rm -f; )
 
+# No need for modem.bin
+rm -f $REPACK/ota/modem.bin
+
+# No need for media/video
+rm -rf $REPACK/ota/system/media/video
+
 # No need for recovery
 rm -rf $REPACK/ota/recovery
+rm -rf $REPACK/ota/system/etc/recovery-resource.dat
+
+# No need for tts
+rm -rf $REPACK/ota/system/tts
+
+# No need for srec
+rm -rf $REPACK/ota/system/usr/srec
 
 # Strip modules
 [ -d $REPACK/ota/system/lib/modules ] && \
-	find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
+        find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
 
-# Use customer LCD density of 440 for xxhdpi
-DEVICELCD=`sed -n -e'/ro\.sf\.lcd_density/s/^.*=//p' $OUT/system/build.prop`
-if [ "$DEVICELCD" = "480" ]; then
-    sed -i 's/ro.sf.lcd_density=480/ro.sf.lcd_density=440/g' $OUT/system/build.prop
-fi
 
 # Determine what to name the new signed package
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
@@ -121,12 +140,12 @@ else
 fi
 
 
-
 if [ -n $ABIGEN ]; then
 	echo ${cya}"Packing in Pre-Built Libs for CPU Variant:${ylw}$ABIGEN"${txtrst}
 	cp ${ANDROID_BUILD_TOP}/vendor/blackout/prebuilt/libs/$ABIGEN/libbypass.so $REPACK/ota/system/lib/libbypass.so
 	echo ""
 fi
+
 
 # Pack it up and sign
 echo -e ${grn}"Zipping package..."${txtrst}
