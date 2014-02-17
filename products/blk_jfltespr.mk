@@ -13,8 +13,8 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/blackout/overlay/aokp/device/jfltexxx
 #    $(shell cp -f vendor/blackout/prebuilt/common/bootanimation_framework/android-logo-mask_samsung-xhdpi.png frameworks/base/core/res/assets/images/android-logo-mask.png)
 
 # Copy bootanimation
-#PRODUCT_COPY_FILES += \
-#    vendor/blackout/prebuilt/xxhdpi/bootanimation.zip:system/media/bootanimation.zip
+PRODUCT_COPY_FILES += \
+    vendor/blackout/prebuilt/bootanimation/bootanimation.zip:system/media/bootanimation.zip
 
 # include Blackout ROM common configuration
 include vendor/blackout/config/blk_common.mk

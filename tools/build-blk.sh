@@ -42,6 +42,9 @@ else
 	DATE=date
 fi
 
+# get time of startup
+t1=$($DATE +%s)
+
 export USE_CCACHE=1
 
 opt_clean=0
@@ -101,9 +104,6 @@ if [ "$opt_sync" -ne 0 ]; then
 fi
 
 rm -f out/target/product/$device/obj/KERNEL_OBJ/.version
-
-# get time of startup
-t1=$($DATE +%s)
 
 # setup environment
 echo -e ${bldblu}"Setting up environment"${txtrst}
